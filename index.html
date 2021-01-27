@@ -4,6 +4,7 @@
     <script src="https://miro.com/app/static/sdk.1.1.js"></script>
     <script>
     miro.onReady(() => {
+        console.log(111)
         miro.addListener('WIDGETS_CREATED', widget => {
           console.log(widget)
         })
@@ -19,7 +20,7 @@
           }
         }
         onAllWidgetsLoaded(() => {
-          alert('all widgets are loaded')
+          console.log('all widgets are loaded')
         })
     })
     </script>
