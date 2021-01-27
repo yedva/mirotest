@@ -4,17 +4,23 @@
     <script src="https://miro.com/app/static/sdk.1.1.js"></script>
     <script>
     miro.onReady(() => {
-      miro.initialize({
-        extensionPoints: {
-          bottomBar: {
-            title: 'Some title',
-            svgIcon: '<circle cx="12" cy="12" r="9" fill="none" fill-rule="evenodd" stroke="currentColor" stroke-width="2"/>',
-            onClick: () => {
-              alert('Hi!')
-            }
+        miro.addListener('WIDGETS_CREATED', widget => {
+          console.log(widget)
+        })
+
+        // For ALL_WIDGETS_LOADED event we need to check if widgets
+        // are already loaded before subscription
+        async function onAllWidgetsLoaded(callback) {
+          const areAllWidgetsLoaded = await miro.board.widgets.areAllWidgetsLoaded()
+          if (areAllWidgetsLoaded) {
+            callback()
+          } else {
+            miro.addListener('ALL_WIDGETS_LOADED', callback)
           }
         }
-      })
+        onAllWidgetsLoaded(() => {
+          alert('all widgets are loaded')
+        })
     })
     </script>
 </head>
